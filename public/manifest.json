@@ -1,25 +1,27 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "LooksRewards",
+  "short_name": "LooksRewards",
+  "description": "Check the staking rewards for LooksRare.org for today and what to expect for tomorrow.",
+  "display": "standalone",
+  "theme_color": "#6c757d",
+  "background_color": "#6c757d",
+  "crossorigin": "use-credentials",
+  "ios": {
+    "apple-mobile-web-app-title": "LooksRewards",
+    "apple-mobile-web-app-status-bar-style": "#6c757d"
+  },
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "manifest/icon-32x32.png",
+      "sizes": "32x32"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
+      "src": "manifest/icon-192x192.png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
+      "src": "manifest/icon-512x512.png",
       "sizes": "512x512"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }
