@@ -296,7 +296,7 @@ function App() {
             <div className="col-sm-12 col-md-4">
               <div className="card mb-3">
                 <div className="card-body text-center">
-                  <div>Remaining ETH Payout Today</div>
+                  <div>Remaining Total ETH Payout Today</div>
                   {stakingInfoLoading ?
                     <div className="placeholder w-100"></div>
                       :
@@ -346,7 +346,7 @@ function App() {
               <div className="col-sm-12 col-md-4">
                 <div className="card mb-3">
                   <div className="card-body text-center">
-                    <div>Remaning LOOKS Payout Today</div>
+                    <div>Remaining LOOKS Payout Today</div>
                     {balanceLoading ?
                       <div className="placeholder w-100"></div>
                         :
@@ -395,7 +395,7 @@ function App() {
               <div className="col-sm-12 col-md-4">
                 <div className="card mb-3">
                   <div className="card-body text-center">
-                    <div>Remaning ETH Payout Today</div>
+                    <div>Remaining ETH Payout Today</div>
                     {balanceLoading ?
                       <div className="placeholder w-100"></div>
                         :
