@@ -30,11 +30,11 @@ class Footer extends Component {
                     <div className="p-2">
                       <img src={avatar} alt="Slowshi.eth" width="22" height="22"/>
                     </div>
-                    <a id="discord" className="btn text-light" target="__blank" title="Discord" href="https://discord.gg/Tq3bTFkURb">
-                      <i className="bi bi-discord"></i>
-                    </a>
                     <a id="twitter" className="btn text-light" target="__blank" title="Twitter" href="https://twitter.com/slowshi">
                       <i className="bi bi-twitter"></i>
+                    </a>
+                    <a id="github" className="btn text-light" target="__blank" title="Github" href="https://github.com/slowshi/looks-rewards">
+                      <i className="bi bi-github"></i>
                     </a>
                   </div>
                   <div id="rightNav" className="col-md-6 mb-3 col-sm-12">

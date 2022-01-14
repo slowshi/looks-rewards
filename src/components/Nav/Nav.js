@@ -45,6 +45,7 @@ function Nav() {
             <form id="search" className="needs-validation flex-1"
                     onSubmit={submitForm}>
                 <input
+                value={address}
                 onInput={(e)=>setAddresses(e.target.value)}
                 className="form-control me-2"
                 placeholder="Wallet Address or ENS"

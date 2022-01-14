@@ -9,6 +9,9 @@ import Footer from './components/Footer/Footer';
 import {rewards} from './utils/rewards';
 
 function App() {
+  const ETHChart = 'https://dexscreener.com/ethereum/0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640';
+  const LOOKSChart = 'https://dexscreener.com/ethereum/0x4b5ab61593a2401b1075b90c04cbcdd3f87ce011';
+
   // I dunno...
   const hackyBool = true;
   useEffect(()=>{
@@ -227,7 +230,13 @@ function App() {
             <div className="col-sm-12 col-md-4">
               <div className="card mb-3">
                 <div className="card-body text-center">
-                  <div>LOOKS Price</div>
+                  <div className="d-flex align-items-center justify-content-center">
+                    LOOKS Price
+                    <a className="btn text-dark btn-sm" target="_blank" rel="noreferrer"
+                    href={LOOKSChart}>
+                      <i className="bi bi-box-arrow-up-right"></i>
+                    </a>
+                  </div>
                   {stakingInfoLoading ?
                     <div className="placeholder w-100"></div>
                       :
@@ -239,7 +248,13 @@ function App() {
             <div className="col-sm-12 col-md-4">
               <div className="card mb-3">
                 <div className="card-body text-center">
-                  <div>ETH Price</div>
+                  <div className="d-flex align-items-center justify-content-center">
+                    ETH Price
+                    <a className="btn text-dark btn-sm" target="_blank" rel="noreferrer"
+                    href={ETHChart}>
+                      <i className="bi bi-box-arrow-up-right"></i>
+                    </a>
+                  </div>
                   {stakingInfoLoading ?
                     <div className="placeholder w-100"></div>
                       :
