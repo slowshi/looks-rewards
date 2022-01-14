@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import avatar from '../../assets/avatar.png';
+import fohmo from '../../assets/fohmo.png';
 import {DEV_ADDRESS} from '../../utils/constants';
 import './Footer.css';
 
@@ -35,6 +36,9 @@ class Footer extends Component {
                     </a>
                     <a id="github" className="btn text-light" target="__blank" title="Github" href="https://github.com/slowshi/looks-rewards">
                       <i className="bi bi-github"></i>
+                    </a>
+                    <a id="fohmoio" className="btn text-light" target="__blank" title="Fohmo.io" href="https://www.fohmo.io">
+                      <img src={fohmo} alt="Slowshi.eth" width="22" height="22"/>
                     </a>
                   </div>
                   <div id="rightNav" className="col-md-6 mb-3 col-sm-12">
