@@ -31,13 +31,13 @@ class Footer extends Component {
                     <div className="p-2">
                       <img src={avatar} alt="Slowshi.eth" width="22" height="22"/>
                     </div>
-                    <a id="twitter" className="btn text-light" target="__blank" title="Twitter" href="https://twitter.com/slowshi">
+                    <a id="twitter" className="btn text-light" rel="noreferrer" target="__blank" title="Twitter" href="https://twitter.com/slowshi">
                       <i className="bi bi-twitter"></i>
                     </a>
-                    <a id="github" className="btn text-light" target="__blank" title="Github" href="https://github.com/slowshi/looks-rewards">
+                    <a id="github" className="btn text-light" rel="noreferrer" target="__blank" title="Github" href="https://github.com/slowshi/looks-rewards">
                       <i className="bi bi-github"></i>
                     </a>
-                    <a id="fohmoio" className="btn text-light" target="__blank" title="Fohmo.io" href="https://www.fohmo.io">
+                    <a id="fohmoio" className="btn text-light" rel="noreferrer" target="__blank" title="Fohmo.io" href="https://www.fohmo.io">
                       <img src={fohmo} alt="Slowshi.eth" width="22" height="22"/>
                     </a>
                   </div>
