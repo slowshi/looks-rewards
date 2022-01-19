@@ -4,7 +4,8 @@ import { rewards } from './rewards';
 const formatURL = (state) => {
   let params = {};
   params = {
-    address: state.app.address
+    address: state.app.address,
+    currency: state.app.fiatCurrency
   }
 
   if(Object.keys(params).length === 0) return '/';

@@ -1,6 +1,7 @@
 import pageLoad from '../../utils/pageLoad';
-import {useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import { useState } from "react";
+import {fiatCurrencyMap} from '../../utils/constants'
 
 function Nav() {
   const dispatch = useDispatch();
@@ -13,7 +14,17 @@ function Nav() {
       pageLoad(true);
     }
   };
-
+  const currency = useSelector((state)=>state.app.fiatCurrency);
+  const updateFiatCurrency = (e) => {
+    dispatch({
+      type: 'updateAppKey',
+      payload: {
+        key: 'fiatCurrency',
+        value: e.target.value
+      }
+    });
+    pageLoad();
+  }
   const submitForm = event => {
     event.preventDefault();
     event.stopPropagation();
@@ -42,7 +53,7 @@ function Nav() {
             LooksRewards
           </a>
           <div className="flex-1">
-            <form id="search" className="needs-validation flex-1"
+            <form id="search" className="needs-validation flex-1 me-2"
                     onSubmit={submitForm}>
                 <input
                 value={address}
@@ -53,10 +64,16 @@ function Nav() {
             </form>
           </div>
           <div>
-            <button className="btn btn-outline-light" onClick={onClickSearch}>
+            <button className="btn btn-outline-light me-2" onClick={onClickSearch}>
               <span className="bi bi-search"></span>
             </button>
           </div>
+          <select value={currency} title="Currency" className="btn btn-dark me-2" aria-label="Currency"
+            onChange={updateFiatCurrency}>
+              {Object.keys(fiatCurrencyMap).map((currencyKey, index)=>
+              <option key={index} value={currencyKey}>{fiatCurrencyMap[currencyKey].label}</option>
+              )}
+          </select>
         </div>
       </nav>
     </div>

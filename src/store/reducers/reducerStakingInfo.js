@@ -10,7 +10,7 @@ const initialState = Object.freeze({
   tomorrowsRewards: 0,
   totalLooksToDistribute: 0,
   tomorrowsLooks: 0,
-  loading: true
+  loading: false
 });
 
 const stakingInfoReducer = (state = initialState, action) => {

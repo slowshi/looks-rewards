@@ -42,9 +42,9 @@ class Footer extends Component {
                     </a>
                   </div>
                   <div id="rightNav" className="col-md-6 mb-3 col-sm-12">
-                  <div id="donate" className="input-group input-group-sm">
-                    <span className="input-group-text">Donate</span>
-                    <input type="text" className="form-control" disabled value={DEV_ADDRESS} aria-label="Dev Address"/>
+                    <div id="donate" className="input-group input-group-sm">
+                      <span className="input-group-text">Donate</span>
+                      <input type="text" className="form-control" disabled value={DEV_ADDRESS} aria-label="Dev Address"/>
                       <button className="btn btn-dark" type="button" id="button-addon2"
                       onClick={this.copyClipboard.bind(this)}>
                       {this.state.copied ?

@@ -7,109 +7,104 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
 import {rewards} from './utils/rewards';
+import { fiatCurrencyMap } from './utils/constants';
+import store from './store/store';
 
 function App() {
   const ETHChart = 'https://dexscreener.com/ethereum/0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640';
   const LOOKSChart = 'https://dexscreener.com/ethereum/0x4b5ab61593a2401b1075b90c04cbcdd3f87ce011';
 
   // I dunno...
-  const hackyBool = true;
-  useEffect(()=>{
-    if(hackyBool) {
-      console.log('do')
-      rewards.init();
-    }
-  },[hackyBool]);
+  // const hackyBool = true;
+  // useEffect(()=>{
+  //   if(hackyBool) {
+  //     rewards.init();
+  //   }
+  // },[hackyBool]);
+  useEffect(() => {
+    store.dispatch({
+      type: 'updateStakingInfoKey',
+      payload: {
+        key: 'loading',
+        value: true
+      }
+    });
+    store.dispatch({
+      type: 'updateBalanceKey',
+      payload: {
+        key: 'loading',
+        value: true
+      }
+    });
+    rewards.init(true);
+    setInterval(() => {
+      rewards.init(true);
+    }, 15000);
+  }, []);
   const stakingInfoLoading = useSelector(state=>state.stakingInfo.loading);
   const balanceLoading = useSelector(state=>state.balance.loading);
-  const hasAddress = useSelector(state=>state.app.address!=='')
+  const hasAddress = useSelector(state=>state.app.address!=='');
+  const currencyConversion = useSelector(state=>state.app.currencyConversion);
+  const fiatCurrency = useSelector(state=>state.app.fiatCurrency);
+  const convertPrice = (value) => {
+    const currencyInfo = fiatCurrencyMap[fiatCurrency];
+    return Number(value * currencyConversion).toLocaleString(undefined, {
+      style: 'currency',
+      currency: currencyInfo.label,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  };
   const stakingInfo = useSelector(state=> {
     const stateStakingInfo = state.stakingInfo;
-    let fractionDigits = 2;
-    if(state.app.fiatCurrency === 'eth' || state.app.fiatCurrency === 'btc') {
-      fractionDigits = 8;
-    }
+    const price = stateStakingInfo.price;
+    document.title = `LooksRewards - ${convertPrice(Number(price))}`
     return {
       ...stateStakingInfo,
       totalShares: Number(stateStakingInfo.totalShares).toFixed(6),
-      ethPriceInUSD: Number(stateStakingInfo.ethPrice).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
-      looksPriceInUSD: Number(stateStakingInfo.price).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      ethPriceInUSD: convertPrice(Number(stateStakingInfo.ethPrice)),
+      looksPriceInUSD: convertPrice(Number(price)),
       tomorrowsRewardsInETH: Number(stateStakingInfo.tomorrowsRewards).toLocaleString(undefined, {
         style: 'currency',
         currency: 'ETH',
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      tomorrowsRewardsInUSD: Number(stateStakingInfo.tomorrowsRewards * stateStakingInfo.ethPrice).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      tomorrowsRewardsInUSD: convertPrice(Number(stateStakingInfo.tomorrowsRewards * stateStakingInfo.ethPrice)),
       totalRewardsToDistributeInETH: Number(stateStakingInfo.totalRewardsToDistribute).toLocaleString(undefined, {
         style: 'currency',
         currency: 'ETH',
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      totalRewardsToDistributeInUSD: Number(stateStakingInfo.totalRewardsToDistribute * stateStakingInfo.ethPrice).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      totalRewardsToDistributeInUSD: convertPrice(Number(stateStakingInfo.totalRewardsToDistribute * stateStakingInfo.ethPrice)),
       tomorrowsLooksInLOOKS: Number(stateStakingInfo.tomorrowsLooks).toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       }),
-      tomorrowsLooksInETH: Number(stateStakingInfo.tomorrowsLooks * stateStakingInfo.price / stateStakingInfo.ethPrice).toLocaleString(undefined, {
+      tomorrowsLooksInETH: Number(stateStakingInfo.tomorrowsLooks * price / stateStakingInfo.ethPrice).toLocaleString(undefined, {
         style: 'currency',
         currency: 'ETH',
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      tomorrowsLooksInUSD: Number(stateStakingInfo.tomorrowsLooks * stateStakingInfo.price).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      tomorrowsLooksInUSD: convertPrice(Number(stateStakingInfo.tomorrowsLooks * price)),
       totalLooksToDistributeInLOOKS: Number(stateStakingInfo.totalLooksToDistribute).toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       }),
-      totalLooksToDistributeInETH: Number(stateStakingInfo.totalLooksToDistribute * stateStakingInfo.price / stateStakingInfo.ethPrice).toLocaleString(undefined, {
+      totalLooksToDistributeInETH: Number(stateStakingInfo.totalLooksToDistribute * price / stateStakingInfo.ethPrice).toLocaleString(undefined, {
         style: 'currency',
         currency: 'ETH',
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      totalLooksToDistributeInUSD: Number(stateStakingInfo.totalLooksToDistribute * stateStakingInfo.price).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      })
+      totalLooksToDistributeInUSD: convertPrice(Number(stateStakingInfo.totalLooksToDistribute * price))
     }
   });
-  console.log(stakingInfo);
   const balance = useSelector(state=> {
     const stateBalance = state.balance;
     const stateStakingInfo = state.stakingInfo;
-    let fractionDigits = 2;
-    if(state.app.fiatCurrency === 'eth' || state.app.fiatCurrency === 'btc') {
-      fractionDigits = 8;
-    }
     const looksShares = stateBalance.looksShares;
     const totalShares = stateStakingInfo.totalShares;
     const percentOfStake = (looksShares / totalShares);
@@ -122,16 +117,8 @@ function App() {
     const looksRewardsToday = stateStakingInfo.totalLooksToDistribute * percentOfStake;
     return {
       ...stateBalance,
-      looksShares: Number(looksShares).toLocaleString(undefined, {
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
-      looksSharesInUSD: Number(price * looksShares).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      looksShares: convertPrice(Number(looksShares)),
+      looksSharesInUSD: convertPrice(Number(price * looksShares)),
       looksSharesInETH: Number(price * looksShares / ethPrice).toLocaleString(undefined, {
         style: 'currency',
         currency: 'ETH',
@@ -144,23 +131,13 @@ function App() {
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      ethRewardsInUSD: Number(ethPrice * ethRewards).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      ethRewardsInUSD: convertPrice(Number(ethPrice * ethRewards)),
       percenateOfStake: Number(percentOfStake).toLocaleString(undefined, {
         style: 'percent',
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      ethRewardsTodayInUSD: Number(ethPrice * ethRewardsToday).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      ethRewardsTodayInUSD: convertPrice(Number(ethPrice * ethRewardsToday)),
       ethRewardsTodayInETH: Number(ethRewardsToday).toLocaleString(undefined, {
         style: 'currency',
         currency: 'ETH',
@@ -173,12 +150,7 @@ function App() {
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      ethRewardsTomorrowInUSD: Number(tomorrowsRewards * ethPrice).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      ethRewardsTomorrowInUSD: convertPrice(Number(tomorrowsRewards * ethPrice)),
       looksRewardsTomorrowInLOOKS: Number(tomorrowsLooks).toLocaleString(undefined, {
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
@@ -189,12 +161,7 @@ function App() {
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      looksRewardsTomorrowInUSD: Number(tomorrowsLooks * price).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      }),
+      looksRewardsTomorrowInUSD: convertPrice(Number(tomorrowsLooks * price)),
       looksRewardsTodayInLOOKS: Number(looksRewardsToday).toLocaleString(undefined, {
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
@@ -205,16 +172,10 @@ function App() {
         minimumFractionDigits: 6,
         maximumFractionDigits: 6
       }),
-      looksRewardsTodayInUSD: Number(looksRewardsToday * price).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: fractionDigits,
-        maximumFractionDigits: fractionDigits
-      })
+      looksRewardsTodayInUSD: convertPrice(Number(looksRewardsToday * price))
     }
   });
   // console.log(balance);
-
   /*
     Looks Rewards Today
     Looks Rewards Tomorrow

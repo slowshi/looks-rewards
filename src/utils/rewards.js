@@ -5,7 +5,7 @@ import CurrencyABI from '../abis/Currency.json';
 import TokenDistributorABI from '../abis/TokenDistributor.json';
 import FeeSharingSystemABI from '../abis/FeeSharingSystem.json';
 import PairContractABI from '../abis/PairContract.json';
-import {addresses, decimals, network} from '../utils/constants';
+import {addresses, decimals, fiatCurrencyMap, network} from '../utils/constants';
 import store from '../store/store';
 
 /* eslint-disable */
@@ -14,21 +14,13 @@ class Rewards {
     const state = store.getState();
     const currencyConversion = await this.getCurrencyConversion(state.app.fiatCurrency, clearCache);
     store.dispatch({
-      type: 'updateKey',
+      type: 'updateAppKey',
       payload: {
         key: 'currencyConversion',
         value: currencyConversion
       }
     });
-    store.dispatch({
-      type: 'clearStakingInfo',
-      payload: null
-    });
-    store.dispatch({
-      type: 'clearBalance',
-      payload: null
-    });
-    this.getStakingInfo()
+    this.getStakingInfo(clearCache)
     .then(async (stakingInfo)=> {
       store.dispatch({
         type: 'updateStakingInfo',
@@ -42,7 +34,7 @@ class Rewards {
         }
       });
       if(state.app.address !== '') {
-        this.getBalances(state.app.address)
+        this.getBalances(state.app.address, clearCache)
         .then((balance)=>{
           store.dispatch({
             type: 'updateBalance',
@@ -76,8 +68,8 @@ class Rewards {
       clearCache
     );
     totalSupply = ethers.utils.formatUnits(totalSupply, decimals.LOOKS);
-    const price = await this.getLooksPrice();
-    const ethPrice = await this.getEthPrice();
+    const price = await this.getLooksPrice(clearCache);
+    const ethPrice = await this.getEthPrice(clearCache);
     const currentBlock = await cacheEthers.blockNumber(network.rpcURL, true);
     let periodEndBlock = await cacheEthers.contractCall(
       feeSharingContract,
@@ -186,7 +178,7 @@ class Rewards {
   async getCurrencyConversion(currencyKey='usd', clearCache=false) {
     if(currencyKey === 'usd') return 1;
     if(currencyKey === 'aed') return 0.27;
-    const currencyAddress = addresses.ETH;
+    const currencyAddress = fiatCurrencyMap[currencyKey].address;
     const currenyContract = cacheEthers.contract(currencyAddress, CurrencyABI, network.rpcURL);
     let latestAnswer = await cacheEthers.contractCall(
       currenyContract,

@@ -2,7 +2,7 @@ const initialState = {
   looksBalance: 0,
   looksShares: 0,
   ethRewards: 0,
-  loading: true
+  loading: false
 };
 const balancesReducer = (state = initialState, action) => {
   switch (action.type) {
