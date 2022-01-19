@@ -48,7 +48,7 @@ function App() {
   const fiatCurrency = useSelector(state=>state.app.fiatCurrency);
   const convertPrice = (value) => {
     const currencyInfo = fiatCurrencyMap[fiatCurrency];
-    return Number(value * currencyConversion).toLocaleString(undefined, {
+    return Number(value / currencyConversion).toLocaleString(undefined, {
       style: 'currency',
       currency: currencyInfo.label,
       minimumFractionDigits: 2,
