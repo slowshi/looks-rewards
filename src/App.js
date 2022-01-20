@@ -7,20 +7,13 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
 import {rewards} from './utils/rewards';
-import { fiatCurrencyMap } from './utils/constants';
+import { fiatCurrencyMap, DEX_SCREENER, addresses } from './utils/constants';
 import store from './store/store';
 
 function App() {
-  const ETHChart = 'https://dexscreener.com/ethereum/0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640';
-  const LOOKSChart = 'https://dexscreener.com/ethereum/0x4b5ab61593a2401b1075b90c04cbcdd3f87ce011';
+  const ETHChart = `${DEX_SCREENER}${addresses['WETH-USDC']}`;
+  const LOOKSChart = `${DEX_SCREENER}${addresses['LOOKS-WETH']}`;
 
-  // I dunno...
-  // const hackyBool = true;
-  // useEffect(()=>{
-  //   if(hackyBool) {
-  //     rewards.init();
-  //   }
-  // },[hackyBool]);
   useEffect(() => {
     store.dispatch({
       type: 'updateStakingInfoKey',
@@ -117,7 +110,10 @@ function App() {
     const looksRewardsToday = stateStakingInfo.totalLooksToDistribute * percentOfStake;
     return {
       ...stateBalance,
-      looksShares: convertPrice(Number(looksShares)),
+      looksShares: Number(looksShares).toLocaleString(undefined, {
+        minimumFractionDigits: 6,
+        maximumFractionDigits: 6
+      }),
       looksSharesInUSD: convertPrice(Number(price * looksShares)),
       looksSharesInETH: Number(price * looksShares / ethPrice).toLocaleString(undefined, {
         style: 'currency',
@@ -175,12 +171,8 @@ function App() {
       looksRewardsTodayInUSD: convertPrice(Number(looksRewardsToday * price))
     }
   });
-  // console.log(balance);
   /*
-    Looks Rewards Today
-    Looks Rewards Tomorrow
     Percentage of Staking?
-
   */
   return (
     <div className="h-100 d-flex flex-column">

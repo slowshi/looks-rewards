@@ -1,9 +1,9 @@
 const DEV_ADDRESS = '0xe88030c28d23d2120C687f49FB5cC2830F0Edb39';
 
+const DEX_SCREENER = 'https://dexscreener.com/ethereum/'
 const paths = {
   HOME: `/`
 };
-
 const addresses = {
   'feeSharingSystem': '0xBcD7254A1D759EFA08eC7c3291B2E85c5dCC12ce',
   'feeSetting': '0x5924a28caaf1cc016617874a2f0c3710d881f3c1',
@@ -90,5 +90,6 @@ export {
   fiatCurrencyMap,
   addresses,
   decimals,
-  DEV_ADDRESS
+  DEV_ADDRESS,
+  DEX_SCREENER
 };
