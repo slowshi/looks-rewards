@@ -117,7 +117,10 @@ function App() {
     const looksRewardsToday = stateStakingInfo.totalLooksToDistribute * percentOfStake;
     return {
       ...stateBalance,
-      looksShares: convertPrice(Number(looksShares)),
+      looksShares: Number(stateStakingInfo.totalLooksToDistribute).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }),
       looksSharesInUSD: convertPrice(Number(price * looksShares)),
       looksSharesInETH: Number(price * looksShares / ethPrice).toLocaleString(undefined, {
         style: 'currency',
