@@ -77,7 +77,7 @@ function Compare() {
     const royalty = Number(state.app.royalties / 100);
     const tradingFee = .02;
     const totalFee = royalty + tradingFee;
-    const listingPrice = state.app.listingPrice;
+    const listingPrice = Number(state.app.listingPrice);
     const profitEth = Number((listingPrice * (1 - totalFee)));
 
     const volume = (state.stakingInfo.tomorrowsRewards + state.stakingInfo.totalRewardsToDistribute) * 100;
