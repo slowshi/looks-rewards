@@ -4,7 +4,9 @@ const initialState = Object.freeze({
   fiatCurrency: 'usd',
   currencyConversion: 1,
   hideTotals: false,
-  loading: false
+  loading: false,
+  listingPrice: 1,
+  royalties: 5
 });
 
 const appReducer = (state = initialState, action) => {

@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Compare from './routes/Compare/Compare.js';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import store from './store/store';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+    <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}></Route>
+        <Route path="/compare" element={<Compare />}></Route>
+      </Routes>
+    </BrowserRouter>
+    </Provider>,
   document.getElementById('root')
 );
 

@@ -2,10 +2,12 @@ import pageLoad from '../../utils/pageLoad';
 import {useSelector, useDispatch} from "react-redux";
 import { useState } from "react";
 import {fiatCurrencyMap} from '../../utils/constants'
+import { Link, useMatch } from "react-router-dom";
 
 function Nav() {
   const dispatch = useDispatch();
   const [address, setAddresses] = useState('');
+  const isCompare = useMatch({ path: '/compare', end: true });
   const onClickSearch = ()=> {
     const searchForm = document.getElementById('search');
     if(searchForm) {
@@ -53,15 +55,19 @@ function Nav() {
             LooksRewards
           </a>
           <div className="flex-1">
-            <form id="search" className="needs-validation flex-1 me-2"
-                    onSubmit={submitForm}>
-                <input
-                value={address}
-                onInput={(e)=>setAddresses(e.target.value)}
-                className="form-control me-2"
-                placeholder="Wallet Address or ENS"
-                name="address"/>
-            </form>
+            {isCompare === null ?
+            <div>
+              <form id="search" className="needs-validation flex-1 me-2"
+                      onSubmit={submitForm}>
+                  <input
+                  value={address}
+                  onInput={(e)=>setAddresses(e.target.value)}
+                  className="form-control me-2"
+                  placeholder="Wallet Address or ENS"
+                  name="address"/>
+              </form>
+            </div>
+            :<div></div>}
           </div>
           <div>
             <button className="btn btn-outline-light me-2" onClick={onClickSearch}>
@@ -76,6 +82,9 @@ function Nav() {
           </select>
         </div>
       </nav>
+      <div className="p-2">
+        <Link className="btn btn-sm btn-outline-light" to="/compare">Compare</Link>
+      </div>
     </div>
   );
 }

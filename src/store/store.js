@@ -17,6 +17,8 @@ const store = createStore(rootReducer,
     address,
     addressParams,
     fiatCurrency,
+    listingPrice: 1,
+    royalties: 5
   }
 });
 
