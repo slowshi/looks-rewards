@@ -49,6 +49,8 @@ function Compare() {
   const stakingInfoLoading = useSelector(state=>state.stakingInfo.loading);
   const currencyConversion = useSelector(state=>state.app.currencyConversion);
   const fiatCurrency = useSelector(state=>state.app.fiatCurrency);
+  const currencyLabel = useSelector(state=>fiatCurrencyMap[state.app.fiatCurrency].label);
+
   const convertPrice = (value) => {
     const currencyInfo = fiatCurrencyMap[fiatCurrency];
     return Number(value / currencyConversion).toLocaleString(undefined, {
@@ -119,12 +121,7 @@ function Compare() {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       }),
-      volumeInETH: Number(volume * state.stakingInfo.ethPrice).toLocaleString(undefined, {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      })
+      volumeInETH: convertPrice(Number(volume * state.stakingInfo.ethPrice))
     }
   });
   const updateListingPrice = (e) => {
@@ -246,7 +243,7 @@ function Compare() {
                         <td>{listingPriceInETH}</td>
                       </tr>
                       <tr>
-                        <th scope="row">Listed Price USD</th>
+                        <th scope="row">Listed Price ({currencyLabel})</th>
                         <td>{listingPriceInUSD}</td>
                         <td>{listingPriceInUSD}</td>
                       </tr>
@@ -266,7 +263,7 @@ function Compare() {
                         <td>{lrProfit.looksRewards}</td>
                       </tr>
                       <tr>
-                        <th scope="row">Trading Rewards (USD)</th>
+                        <th scope="row">Trading Rewards ({currencyLabel})</th>
                         <td>0</td>
                         <td>{lrProfit.looksRewardsToUSD}</td>
                       </tr>
@@ -281,7 +278,7 @@ function Compare() {
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row">Profit (USD)</th>
+                        <th scope="row">Profit ({currencyLabel})</th>
                         <td>{osProfit.USD}</td>
                         <td>{lrProfit.USD}</td>
                       </tr>
