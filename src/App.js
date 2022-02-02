@@ -380,6 +380,7 @@ function App() {
           : ''}
         </div>
       </div>
+      <div className="ms-3 txt-smol">* Not affiliated with LooksRare.org. Buy me a beer, donate below!</div>
       <Footer></Footer>
     </div>
   );
