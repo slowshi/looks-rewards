@@ -70,7 +70,7 @@ class Rewards {
     totalSupply = ethers.utils.formatUnits(totalSupply, decimals.LOOKS);
     const price = await this.getLooksPrice(clearCache);
     const ethPrice = await this.getEthPrice(clearCache);
-    const currentBlock = await cacheEthers.blockNumber(network.rpcURL, true);
+    const currentBlock = await cacheEthers.blockNumber(network.rpcURL);
     let periodEndBlock = await cacheEthers.contractCall(
       feeSharingContract,
       'periodEndBlock',
@@ -109,6 +109,7 @@ class Rewards {
       totalShares,
       ethRewardsPerBlock,
       blocksLeft,
+      periodEndBlock: +periodEndBlock,
       nextRewardCalculation,
       totalLooksToDistribute: blocksLeft * looksPerBlock,
       tomorrowsLooks,

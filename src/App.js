@@ -219,7 +219,13 @@ function App() {
             <div className="col-sm-12 col-md-4">
               <div className="card mb-3">
                 <div className="card-body text-center">
-                  <div>Daily Reset</div>
+                  <div className="d-flex align-items-center justify-content-center">
+                    Daily Reset
+                    <a className="btn text-dark btn-sm" target="_blank" rel="noreferrer"
+                    href={`https://etherscan.io/block/countdown/${stakingInfo.periodEndBlock}`}>
+                      <i className="bi bi-box-arrow-up-right"></i>
+                    </a>
+                    </div>
                   {stakingInfoLoading ?
                     <div className="placeholder w-100"></div>
                       :
