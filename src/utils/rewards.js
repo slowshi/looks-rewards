@@ -60,6 +60,15 @@ class Rewards {
       clearCache
     );
     looksPerBlock = ethers.utils.formatUnits(looksPerBlock, decimals.LOOKS);
+
+    let totalAmountStaked = await cacheEthers.contractCall(
+      tokenDistributorContract,
+      'totalAmountStaked',
+      [],
+      clearCache
+    );
+    totalAmountStaked = ethers.utils.formatUnits(totalAmountStaked, decimals.LOOKS);
+
     const tomorrowsLooks = looksPerBlock * blockInterval;
     let totalSupply = await cacheEthers.contractCall(
       looksContract,
@@ -113,6 +122,7 @@ class Rewards {
       nextRewardCalculation,
       totalLooksToDistribute: blocksLeft * looksPerBlock,
       tomorrowsLooks,
+      totalAmountStaked: +totalAmountStaked,
       totalRewardsToDistribute: blocksLeft * ethRewardsPerBlock,
       tomorrowsRewards
     }

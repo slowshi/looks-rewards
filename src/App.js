@@ -99,8 +99,8 @@ function App() {
     const stateBalance = state.balance;
     const stateStakingInfo = state.stakingInfo;
     const looksShares = stateBalance.looksShares;
-    const totalShares = stateStakingInfo.totalShares;
-    const percentOfStake = (looksShares / totalShares);
+    const totalAmountStaked = stateStakingInfo.totalAmountStaked;
+    const percentOfStake = (looksShares / totalAmountStaked);
     const ethRewards = stateBalance.ethRewards;
     const price = stateStakingInfo.price;
     const ethPrice = stateStakingInfo.ethPrice;
@@ -297,6 +297,7 @@ function App() {
                         <div>{balance.looksSharesInUSD}</div>
                         <div className="txt-smol">(LOOKS {balance.looksShares})</div>
                         <div className="txt-smol">({balance.looksSharesInETH})</div>
+                        <div className="txt-smol">({balance.percenateOfStake} of Pool)</div>
                       </div>
                     }
                   </div>

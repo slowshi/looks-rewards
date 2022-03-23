@@ -11,8 +11,8 @@ function Compare() {
   const ETHChart = `${DEX_SCREENER}${addresses['WETH-USDC']}`;
   const LOOKSChart = `${DEX_SCREENER}${addresses['LOOKS-WETH']}`;
   //this will change
-  const dailyLooksTradingRewards = 2866500.00;
-  // const dailyLooksTradingRewards = 1361587.50;
+  // const dailyLooksTradingRewards = 2866500.00;
+  const dailyLooksTradingRewards = 1361587.50;
   // const dailyLooksTradingRewards = 537468.75;
   // const dailyLooksTradingRewards = 286650.00;
   useEffect(() => {
