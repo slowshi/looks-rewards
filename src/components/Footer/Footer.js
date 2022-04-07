@@ -28,9 +28,6 @@ class Footer extends Component {
               <div className="container-fluid">
                 <div className="row">
                   <div id="leftNav" className="col-md-6 mb-3 col-sm-12">
-                    <div className="p-2">
-                      <img src={avatar} alt="Slowshi.eth" width="22" height="22"/>
-                    </div>
                     <a id="twitter" className="btn text-light" rel="noreferrer" target="__blank" title="Twitter" href="https://twitter.com/slowshi">
                       <i className="bi bi-twitter"></i>
                     </a>
